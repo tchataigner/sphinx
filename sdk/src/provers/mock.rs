@@ -107,6 +107,33 @@ impl Prover for MockProver {
                     sphinx_version: self.version().to_string(),
                 })
             }
+            SphinxProofKind::Shrink => {
+                let (public_values, _) = SphinxProver::execute(&pk.elf, &stdin, context)?;
+                Ok(SphinxProofWithPublicValues {
+                    proof: SphinxProof::Shrink(ShardProof {
+                        commitment: ShardCommitment {
+                            main_commit: [BabyBear::zero(); 8].into(),
+                            permutation_commit: [BabyBear::zero(); 8].into(),
+                            quotient_commit: [BabyBear::zero(); 8].into(),
+                        },
+                        opened_values: ShardOpenedValues { chips: vec![] },
+                        opening_proof: TwoAdicFriPcsProof {
+                            fri_proof: FriProof {
+                                commit_phase_commits: vec![],
+                                query_proofs: vec![],
+                                final_poly: Default::default(),
+                                pow_witness: BabyBear::zero(),
+                            },
+                            query_openings: vec![],
+                        },
+                        chip_ordering: HashMap::new(),
+                        public_values: vec![],
+                    }),
+                    stdin,
+                    public_values,
+                    sphinx_version: self.version().to_string(),
+                })
+            }
         }
     }
 

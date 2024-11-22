@@ -15,6 +15,7 @@ pub enum SphinxProof {
     #[strum_discriminants(default)]
     Core(Vec<ShardProof<CoreSC>>),
     Compressed(ShardProof<InnerSC>),
+    Shrink(ShardProof<InnerSC>),
     Plonk(PlonkBn254Proof),
 }
 

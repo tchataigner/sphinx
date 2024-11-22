@@ -72,6 +72,15 @@ impl Prover for LocalProver {
             });
         }
         let compress_proof = self.prover.shrink(reduce_proof, opts)?;
+        if kind == SphinxProofKind::Shrink {
+            return Ok(SphinxProofWithPublicValues {
+                proof: SphinxProof::Shrink(compress_proof.proof),
+                stdin,
+                public_values,
+                sphinx_version: self.version().to_string(),
+            });
+        }
+
         let outer_proof = self.prover.wrap_bn254(compress_proof, opts)?;
 
         let plonk_bn254_aritfacts = if sphinx_prover::build::sphinx_dev_mode() {

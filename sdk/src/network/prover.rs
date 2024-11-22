@@ -187,6 +187,7 @@ impl From<SphinxProofKind> for ProofMode {
             SphinxProofKind::Core => Self::Core,
             SphinxProofKind::Compressed => Self::Compressed,
             SphinxProofKind::Plonk => Self::Plonk,
+            SphinxProofKind::Shrink => Self::Shrink,
         }
     }
 }

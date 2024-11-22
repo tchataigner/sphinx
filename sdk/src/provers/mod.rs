@@ -85,6 +85,10 @@ pub trait Prover: Send + Sync {
                 .sphinx_prover()
                 .verify_compressed(&SphinxReduceProof { proof }, vkey)
                 .map_err(SphinxVerificationError::Recursion),
+            SphinxProof::Shrink(proof) => self
+                .sphinx_prover()
+                .verify_shrink(&SphinxReduceProof { proof }, vkey)
+                .map_err(SphinxVerificationError::Recursion),
             SphinxProof::Plonk(proof) => self
                 .sphinx_prover()
                 .verify_plonk_bn254(
